@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Login | AI FactShield Pro{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">{% endblock %}
+{% block content %}
+<div class="auth-wrap"><section class="auth-card glass">
+  <div class="auth-brand"><img src="{{ url_for('static', filename='images/shield.png') }}" alt=""><div><strong>AI FactShield</strong><span>PRO</span></div></div>
+  <div class="eyebrow">SECURE ACCESS</div><h1>Welcome <span>back.</span></h1><p class="auth-sub">Sign in to save verification history, generate reports and monitor your analysis dashboard.</p>
+  <form method="POST"><label>Email<input name="email" type="email" required placeholder="you@example.com"></label><label>Password<input name="password" type="password" required placeholder="••••••••"></label><button class="btn primary full" type="submit">Sign In →</button></form>
+  <p class="auth-switch">New to FactShield? <a href="{{ url_for('register.register') }}">Create an account</a></p>
+</section></div>
+{% endblock %}

@@ -1,0 +1,1 @@
+/* Chart.js integration can be added here without changing dashboard structure. */

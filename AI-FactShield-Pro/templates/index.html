@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}AI FactShield Pro | Multimodal Fake News Verification{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">✦ AI-POWERED INFORMATION TRUST PLATFORM</div>
+    <h1>Don't just read news.<br><span>Verify it.</span></h1>
+    <p class="hero-text">Analyze text, images, PDFs, videos and voice content in English, Hindi and Gujarati. Combine ML signals with an offline evidence demo before you trust or share a claim.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="{{ url_for('detect.detect') }}">Open Verification Center <span>→</span></a>
+      <a class="btn secondary" href="{{ url_for('home.about') }}">How it works</a>
+    </div>
+    <div class="trust-row"><span>✓ Multimodal</span><span>✓ Regional Languages</span><span>✓ Evidence Layer</span><span>✓ Explainable Result</span></div>
+  </div>
+  <div class="hero-visual glass">
+    <img src="{{ url_for('static', filename='images/hero.png') }}" alt="AI FactShield verification platform">
+    <div class="hero-overlay"><strong>DEMO VERIFICATION</strong><span>Detect • Analyze • Verify</span></div>
+  </div>
+</section>
+
+<section class="capability-strip">
+  <article class="capability"><b>01</b><span>TEXT</span><p>ML classification, language detection, keywords and summary.</p></article>
+  <article class="capability"><b>02</b><span>MEDIA</span><p>OCR for images/PDFs and frame analysis for videos.</p></article>
+  <article class="capability"><b>03</b><span>VOICE</span><p>Browser voice capture plus audio transcription workflow.</p></article>
+  <article class="capability"><b>04</b><span>EVIDENCE</span><p>Offline demo evidence and source matching for claim verification.</p></article>
+</section>
+
+<section class="live-news-section">
+  <div class="live-news-head">
+    <div><div class="eyebrow">PLACEMENT DEMO</div><h2>Try four <span>sample stories.</span></h2><p>Offline demo cards are included so the project can be demonstrated without an internet connection.</p></div>
+    <a class="btn secondary" href="{{ url_for('detect.detect') }}">Open Verification →</a>
+  </div>
+  <div class="live-news-grid">
+    {% for item in demo_news %}
+    <article class="news-card glass">
+      <div class="news-media"><img src="{{ url_for('static', filename=item.image) }}" alt="{{ item.title }}"><video muted loop autoplay playsinline preload="metadata"><source src="{{ url_for('static', filename=item.video) }}" type="video/mp4"></video></div>
+      <div class="news-card-top"><span class="news-category">{{ item.category }}</span><span class="demo-pill">DEMO</span></div>
+      <h3>{{ item.title }}</h3>
+      <div class="news-source">{{ item.source }}{% if item.published %} • {{ item.published }}{% endif %}</div>
+      <a class="news-verify" href="{{ url_for('detect.detect') }}?claim={{ item.title|urlencode }}">Detect this story <span>→</span></a>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="workflow glass">
+  <div><div class="eyebrow">THE VERIFICATION PIPELINE</div><h2>From claim to <span>evidence.</span></h2></div>
+  <div class="workflow-steps"><div><i>1</i><strong>Extract</strong><small>Read the submitted media</small></div><div><i>2</i><strong>Analyze</strong><small>Language + ML signals</small></div><div><i>3</i><strong>Compare</strong><small>Find supporting reports</small></div><div><i>4</i><strong>Explain</strong><small>Verdict + confidence + sources</small></div></div>
+</section>
+{% endblock %}

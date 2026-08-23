@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}About | AI FactShield Pro{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">{% endblock %}
+{% block content %}
+<section class="section-head"><div class="eyebrow">ABOUT THE PROJECT</div><h1>Built for <span>digital trust.</span></h1><p>AI FactShield Pro combines machine-learning signals, media extraction and current-news evidence into one practical verification workflow.</p></section>
+<section class="feature-grid"><article class="feature-card glass"><h3>AI / ML</h3><p>TF-IDF/Logistic Regression support plus an explainable signal layer.</p></article><article class="feature-card glass"><h3>Multimodal</h3><p>Text, image, PDF, video and audio workflows with graceful fallbacks.</p></article><article class="feature-card glass"><h3>Evidence First</h3><p>Current reporting is shown with source, match score and publication date.</p></article></section>
+<section class="glass simple-panel"><div class="eyebrow">RESPONSIBLE VERIFICATION</div><h2>Confidence is not certainty.</h2><p style="color:var(--muted);line-height:1.7">The platform separates a model signal from an evidence verdict. Claims without strong supporting evidence are marked Unverified rather than being presented as facts. This makes the demo closer to a real information-verification product.</p></section>
+{% endblock %}

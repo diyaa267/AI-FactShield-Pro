@@ -1,0 +1,7 @@
+
+:root{
+  --bg:#020303; --bg2:#07151d; --panel:rgba(7,20,29,.76);
+  --line:rgba(0,190,255,.24); --text:#f7fbff; --muted:#98a7b5;
+  --cyan:#10bfff; --blue:#327cff; --violet:#a45cff; --danger:#ff5d7d; --safe:#2ce6a8;
+  --shadow:0 26px 80px rgba(0,0,0,.58); --radius:22px;
+}

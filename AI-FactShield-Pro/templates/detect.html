@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+{% block title %}Verification Center | AI FactShield Pro{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/detect.css') }}">{% endblock %}
+{% block content %}
+<section class="section-head detect-head">
+  <div><div class="eyebrow">MULTIMODAL VERIFICATION ENGINE</div><h1>Verification <span>Center</span></h1><p>Check claims with ML + offline demo evidence. Upload text, image, PDF, video or audio in English, Hindi or Gujarati.</p></div>
+  <div class="engine-badge"><span class="live-dot"></span> Engine Ready <small>English • हिन्दी • ગુજરાતી</small></div>
+</section>
+
+<div class="detect-tabs glass">
+  <button class="mode-btn active" data-mode="text">✦ Text</button>
+  <button class="mode-btn" data-mode="media">▣ Image / PDF</button>
+  <button class="mode-btn" data-mode="video">▶ Video</button>
+  <button class="mode-btn" data-mode="audio">◉ Audio / Voice</button>
+</div>
+
+<div class="detect-layout">
+  <section class="detect-card glass">
+    <div class="card-title"><span>01</span> Claim or News Content</div>
+
+    <div class="claim-content-box">
+      {% if result and result.media_url %}
+      <div class="active-media-head">
+        <div><span class="eyebrow">SELECTED CONTENT</span><strong>{{ result.source_type }}{% if result.filename %} • {{ result.filename }}{% endif %}</strong></div>
+        <span class="demo-pill">READY</span>
+      </div>
+      <div class="active-media-preview">
+        {% if result.source_type == 'Image' %}
+          <img src="{{ result.media_url }}" alt="Selected news image">
+        {% elif result.source_type == 'Video' %}
+          <video controls playsinline preload="metadata" {% if result.filename and result.filename.endswith('.mp4') %}poster="{{ url_for('static', filename='images/demo/demo-2.png') if result.demo_media else '' }}"{% endif %}>
+            <source src="{{ result.media_url }}" type="video/mp4">
+            Your browser does not support this video.
+          </video>
+        {% elif result.source_type == 'Audio' %}
+          <div class="active-audio-art"><div class="audio-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span>Audio evidence loaded</span></div>
+          <audio controls preload="metadata"><source src="{{ result.media_url }}" type="audio/wav">Your browser does not support audio.</audio>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <form method="POST" id="textForm">
+        <textarea name="text" id="newsText" placeholder="Paste a headline, social-media claim or full news article here...">{{ request.form.get('text', result.text if result else '') }}</textarea>
+        <div class="form-foot"><span id="charCount">0 characters</span><button class="btn primary" type="submit">Analyze & Verify →</button></div>
+      </form>
+
+      <div id="localMediaPreview" class="local-media-preview" hidden>
+        <div class="active-media-head"><div><span class="eyebrow">FILE PREVIEW</span><strong id="localMediaName">Selected media</strong></div><span class="demo-pill">READY</span></div>
+        <div id="localMediaBody" class="active-media-preview"></div>
+      </div>
+    </div>
+
+    <div class="voice-panel">
+      <div><strong>Voice input</strong><small>Speak a claim directly from your browser.</small></div>
+      <button class="btn secondary" id="voiceBtn" type="button">🎙 Start Voice</button>
+    </div>
+
+    <div class="upload-zone">
+      <div class="upload-icon">＋</div><div><strong>Upload evidence</strong><p>Images • PDF • TXT • MP4 • MOV • AVI • WAV • FLAC</p></div>
+      <form action="{{ url_for('detect.upload') }}" method="POST" enctype="multipart/form-data" id="mediaUploadForm">
+        <input id="mediaFile" type="file" name="file" accept=".txt,.pdf,.png,.jpg,.jpeg,.webp,.mp4,.mov,.avi,.wav,.flac,.aiff">
+        <input id="uploadText" type="hidden" name="text" value="">
+        <label for="mediaFile" class="btn secondary">Choose File</label><button class="btn primary" type="submit">Process Media →</button>
+      </form>
+      <small class="upload-note">Choose an image, video or audio file to preview it above. Process Media then extracts readable content and shows the verification result on the right.</small>
+    </div>
+
+    <div class="demo-box">
+      <div><strong>Placement demo</strong><small>Try one of the four offline sample stories below.</small></div>
+      <button class="btn secondary" id="demoClaimBtn" type="button">Load Demo Claim</button>
+    </div>
+
+    <div class="live-news-panel demo-news-panel">
+      <div class="live-news-panel-head"><div><div class="eyebrow">PLACEMENT DEMO</div><strong>4 sample news stories</strong><small>Click any card to load it into the detector. The demo works offline.</small></div><span class="demo-pill">OFFLINE</span></div>
+      <div class="demo-language-filter" aria-label="Demo language filter">
+        <button type="button" class="demo-lang-btn active" data-lang="all">All</button>
+        <button type="button" class="demo-lang-btn" data-lang="English">English</button>
+        <button type="button" class="demo-lang-btn" data-lang="Hindi">हिन्दी</button>
+        <button type="button" class="demo-lang-btn" data-lang="Gujarati">ગુજરાતી</button>
+      </div>
+      <div class="demo-news-list">
+        {% for item in demo_news %}
+        <button type="button" class="demo-news-mini" data-language="{{ item.language }}" data-news-title="{{ item.title|e }}">
+          <div class="demo-thumb"><img src="{{ url_for('static', filename=item.image) }}" alt="{{ item.language }} demo news"><video muted loop autoplay playsinline preload="metadata"><source src="{{ url_for('static', filename=item.video) }}" type="video/mp4"></video></div>
+          <div class="demo-copy"><span>{{ item.language }} • {{ item.category }} • {{ item.verdict|upper }}</span><strong>{{ item.title }}</strong><em>{{ item.source }}</em></div>
+        </button>
+        {% endfor %}
+      </div>
+
+      <div class="demo-media-showcase">
+        <div class="demo-media-head"><div><div class="eyebrow">MULTIMEDIA DEMO</div><strong>Image • Video • Audio</strong><small>One sample of each media type for your placement presentation.</small></div><span class="demo-pill">OFFLINE</span></div>
+        <div class="demo-media-grid">
+          <div class="demo-media-card" role="button" tabindex="0" data-media-type="Image" data-filename="demo-1.png" data-claim="Indian central bank likely intervenes to limit pressure on rupee">
+            <div class="demo-media-preview"><img src="{{ url_for('static', filename='images/demo/demo-1.png') }}" alt="English demo news image"><span class="media-badge">IMAGE</span><span class="media-action">↗ Use Demo</span></div>
+            <div><span>IMAGE • ENGLISH</span><strong>Indian economy visual</strong><small>Click the visual to load and verify.</small></div>
+          </div>
+          <div class="demo-media-card" role="button" tabindex="0" data-media-type="Video" data-filename="demo-4.mp4" data-claim="RBI permanently shuts all foreign-exchange operations across India">
+            <div class="demo-media-preview"><video muted loop autoplay playsinline preload="metadata" poster="{{ url_for('static', filename='images/demo/demo-4.png') }}"><source src="{{ url_for('static', filename='videos/demo-4.mp4') }}" type="video/mp4"></video><span class="media-badge">VIDEO</span><span class="media-action">▶ Use Demo</span></div>
+            <div><span>VIDEO • ENGLISH/INDIA</span><strong>RBI foreign-exchange claim</strong><small>Click the visual to load and verify.</small></div>
+          </div>
+          <div class="demo-media-card" role="button" tabindex="0" data-media-type="Audio" data-filename="demo-gujarati.wav" data-claim="Government announces free laptops for every citizen through a secret message">
+            <div class="demo-media-preview audio-preview"><div class="audio-visual"><div class="audio-icon">🎙</div><div class="audio-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><span class="media-badge">AUDIO</span><span class="media-action">▶ Use Demo</span><audio controls preload="metadata"><source src="{{ url_for('static', filename='audio/demo-gujarati.wav') }}" type="audio/wav"></audio></div>
+            <div><span>AUDIO • GUJARATI</span><strong>Free laptop viral claim</strong><small>Click the visual to load and verify.</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="result-card glass {% if result %}has-result{% endif %}">
+    {% if result %}
+      {% set v = result.verification %}
+      <div class="result-top">
+        <div class="result-icon {% if v.verdict == 'fake' %}danger{% elif v.verdict == 'real' %}safe{% else %}neutral{% endif %}">{% if v.verdict == 'fake' %}✕{% elif v.verdict == 'real' %}✓{% elif v.verdict == 'misleading' %}≈{% else %}?{% endif %}</div>
+        <div><div class="eyebrow">VERIFICATION RESULT</div><h2>{{ v.verdict|upper }}</h2><small>{{ result.source_type }}{% if result.filename %} • {{ result.filename }}{% endif %}</small></div>
+      </div>
+      <div class="confidence"><div><span>Evidence confidence</span><strong>{{ v.verification_confidence }}%</strong></div><div class="meter"><i style="width:{{ v.verification_confidence }}%"></i></div></div>
+      <div class="result-meta"><span>🌐 {{ result.language }}</span><span>🤖 ML: {{ result.prediction|upper }} {{ result.confidence }}%</span><span>🔎 Evidence: {% if v.evidence_available %}Found{% else %}Limited{% endif %}</span></div>
+      <div class="result-block"><small>WHY THIS RESULT?</small><p>{{ v.explanation }}</p></div>
+      {% if v.best_evidence %}
+      <div class="evidence-card"><div class="evidence-label">BEST EVIDENCE • {{ v.best_evidence.source }}{% if v.best_evidence.demo %} • DEMO FALLBACK{% endif %}</div><h3>{{ v.best_evidence.title }}</h3><div class="evidence-meta">Match {{ v.best_evidence.score }}%{% if v.best_evidence.published %} • {{ v.best_evidence.published }}{% endif %}</div><a href="{{ v.best_evidence.link }}" target="_blank" rel="noopener">Open source ↗</a></div>
+      {% endif %}
+      {% if v.evidence|length > 1 %}
+      <div class="result-block"><small>OTHER SUPPORTING RESULTS</small><div class="evidence-list">{% for e in v.evidence[1:4] %}<a class="mini-evidence" href="{{ e.link }}" target="_blank" rel="noopener"><span>{{ e.source }}</span><strong>{{ e.title }}</strong><em>{{ e.score }}%</em></a>{% endfor %}</div></div>
+      {% endif %}
+      <div class="result-block"><small>SUMMARY</small><p>{{ result.summary }}</p></div>
+      <div class="result-block"><small>KEYWORDS</small><div class="chips">{% for k in result.keywords %}<span>{{ k }}</span>{% else %}<span>No keywords extracted</span>{% endfor %}</div></div>
+      <div class="result-disclaimer">REAL means strong supporting evidence was found; FAKE means strong false-news/model evidence was found. MISLEADING and UNVERIFIED are intentionally kept separate because lack of evidence is not proof of falsity.</div>
+    {% else %}
+      <div class="empty-result"><div class="orb">⌁</div><div class="eyebrow">READY TO VERIFY</div><h2>Your evidence report appears here</h2><p>Submit text or upload media to see REAL / FAKE / MISLEADING / UNVERIFIED, confidence, source and evidence.</p><div class="verdict-legend"><span>✓ REAL</span><span>✕ FAKE</span><span>≈ MISLEADING</span><span>? UNVERIFIED</span></div></div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}
+{% block js %}<script src="{{ url_for('static', filename='js/detect.js') }}"></script><script src="{{ url_for('static', filename='js/voice.js') }}"></script><script>
+document.getElementById('demoClaimBtn')?.addEventListener('click', () => {
+  const box = document.getElementById('newsText');
+  box.value = 'Indian central bank likely intervenes to limit pressure on rupee';
+  box.dispatchEvent(new Event('input'));
+  box.focus();
+});
+
+const params = new URLSearchParams(window.location.search);
+const claimFromUrl = params.get('claim');
+if (claimFromUrl) {
+  const box = document.getElementById('newsText');
+  box.value = claimFromUrl;
+  box.dispatchEvent(new Event('input'));
+  box.focus();
+}
+
+document.querySelectorAll('.demo-lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.demo-lang-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const lang = btn.dataset.lang;
+    document.querySelectorAll('.demo-news-mini').forEach(card => {
+      card.style.display = (lang === 'all' || card.dataset.language === lang) ? 'grid' : 'none';
+    });
+  });
+});
+
+const mediaFile = document.getElementById('mediaFile');
+const localPreview = document.getElementById('localMediaPreview');
+const localMediaName = document.getElementById('localMediaName');
+const localMediaBody = document.getElementById('localMediaBody');
+const uploadText = document.getElementById('uploadText');
+const newsTextBox = document.getElementById('newsText');
+
+function showLocalMedia(file) {
+  if (!file || !localPreview || !localMediaBody) return;
+  localPreview.hidden = false;
+  localMediaName.textContent = file.name;
+  localMediaBody.innerHTML = '';
+  const url = URL.createObjectURL(file);
+  const ext = (file.name.split('.').pop() || '').toLowerCase();
+  if (file.type.startsWith('image/') || ['png','jpg','jpeg','webp'].includes(ext)) {
+    const img = document.createElement('img');
+    img.src = url; img.alt = 'Selected image';
+    localMediaBody.appendChild(img);
+  } else if (file.type.startsWith('video/') || ['mp4','mov','avi'].includes(ext)) {
+    const video = document.createElement('video');
+    video.controls = true; video.playsInline = true; video.preload = 'metadata';
+    video.src = url;
+    localMediaBody.appendChild(video);
+  } else if (file.type.startsWith('audio/') || ['wav','flac','aiff'].includes(ext)) {
+    const audioWrap = document.createElement('div');
+    audioWrap.className = 'active-audio-art';
+    audioWrap.innerHTML = '<div class="audio-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span>Audio evidence ready</span>';
+    const audio = document.createElement('audio');
+    audio.controls = true; audio.src = url;
+    localMediaBody.appendChild(audioWrap);
+    localMediaBody.appendChild(audio);
+  } else {
+    localMediaBody.innerHTML = '<div class="file-ready">📄 ' + file.name + '</div>';
+  }
+}
+
+mediaFile?.addEventListener('change', () => showLocalMedia(mediaFile.files[0]));
+
+document.getElementById('mediaUploadForm')?.addEventListener('submit', () => {
+  if (uploadText && newsTextBox) uploadText.value = newsTextBox.value;
+});
+
+document.querySelectorAll('.demo-media-card').forEach(card => {
+  const useDemo = () => {
+    const claim = card.dataset.claim || '';
+    const type = card.dataset.mediaType || 'Image';
+    const filename = card.dataset.filename || 'demo-media';
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = "{{ url_for('detect.demo_media') }}";
+    [['claim', claim], ['source_type', type], ['filename', filename]].forEach(([name, value]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden'; input.name = name; input.value = value;
+      form.appendChild(input);
+    });
+    document.body.appendChild(form);
+    form.submit();
+  };
+  card.addEventListener('click', (event) => {
+    if (event.target.closest('audio, video')) return;
+    useDemo();
+  });
+  card.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); useDemo(); }
+  });
+});
+
+document.querySelectorAll('.demo-news-mini').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const box = document.getElementById('newsText');
+    box.value = btn.dataset.newsTitle || '';
+    box.dispatchEvent(new Event('input'));
+    box.focus();
+    window.scrollTo({top: 120, behavior: 'smooth'});
+  });
+});
+</script>{% endblock %}

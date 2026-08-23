@@ -1,0 +1,54 @@
+[
+  {
+    "id": "demo-1",
+    "language": "English",
+    "category": "Economy",
+    "verdict": "real",
+    "title": "Indian central bank likely intervenes to limit pressure on rupee",
+    "description": "Demo evidence: Reuters reported on August 20, 2026 that the Indian central bank likely intervened in the foreign exchange market to support the rupee.",
+    "source": "Reuters (Demo Evidence)",
+    "published": "20 Aug 2026",
+    "link": "#",
+    "image": "images/demo/demo-1.png",
+    "video": "videos/demo-1.mp4"
+  },
+  {
+    "id": "demo-2",
+    "language": "Hindi",
+    "category": "अर्थव्यवस्था",
+    "verdict": "real",
+    "title": "भारतीय केंद्रीय बैंक ने रुपये पर दबाव कम करने के लिए हस्तक्षेप किया",
+    "description": "डेमो प्रमाण: यह कहानी रुपये पर दबाव कम करने के लिए भारतीय केंद्रीय बैंक के विदेशी मुद्रा बाजार हस्तक्षेप का हिंदी डेमो संस्करण है।",
+    "source": "AI FactShield Demo Evidence",
+    "published": "Demo",
+    "link": "#",
+    "image": "images/demo/demo-2.png",
+    "video": "videos/demo-2.mp4"
+  },
+  {
+    "id": "demo-3",
+    "language": "Gujarati",
+    "category": "વાયરલ દાવો",
+    "verdict": "fake",
+    "title": "સરકાર દરેક નાગરિકને મફત લેપટોપ આપવાની જાહેરાત કરે છે",
+    "description": "ડેમો પુરાવો: આ placement-demo માટે બનાવેલો ખોટો દાવો છે. કોઈ સત્તાવાર જાહેરાત તેનો સમર્થન કરતી નથી.",
+    "source": "AI FactShield Demo Lab",
+    "published": "Demo",
+    "link": "#",
+    "image": "images/demo/demo-3.png",
+    "video": "videos/demo-3.mp4"
+  },
+  {
+    "id": "demo-4",
+    "language": "English",
+    "category": "Viral Claim",
+    "verdict": "fake",
+    "title": "RBI permanently shuts all foreign-exchange operations across India",
+    "description": "Demo evidence: This is a deliberately fabricated placement-demo claim designed to demonstrate the FAKE workflow.",
+    "source": "AI FactShield Demo Lab",
+    "published": "Demo",
+    "link": "#",
+    "image": "images/demo/demo-4.png",
+    "video": "videos/demo-4.mp4"
+  }
+]

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Profile | AI FactShield Pro{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">{% endblock %}
+{% block content %}
+<section class="section-head"><div class="eyebrow">ACCOUNT</div><h1>Your <span>Profile</span></h1></section>
+<section class="profile-card glass">
+  <img src="{{ url_for('static', filename='images/shield.png') }}" class="profile-shield">
+  <div><h2>{{ user.name }}</h2><p>{{ user.email }}</p><small>Member since {{ user.created_at }}</small></div>
+  <a class="btn secondary" href="{{ url_for('login.logout') }}">Logout</a>
+</section>
+{% endblock %}
