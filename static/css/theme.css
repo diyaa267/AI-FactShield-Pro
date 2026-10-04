@@ -1,0 +1,27 @@
+/* User-selectable light/dark theme. Dark remains the default. */
+body.light-mode {
+  --bg:#f4f8fc;
+  --bg2:#e9f1f8;
+  --panel:rgba(255,255,255,.88);
+  --line:rgba(28,112,170,.20);
+  --text:#102033;
+  --muted:#52677b;
+  --shadow:0 24px 70px rgba(31,65,95,.16);
+  background:radial-gradient(circle at 15% 15%,rgba(0,174,255,.12),transparent 34%),radial-gradient(circle at 85% 25%,rgba(76,110,255,.10),transparent 38%),linear-gradient(135deg,#f7fbff,#eaf3fa 55%,#eef0ff);
+}
+body.light-mode:before { opacity:.12; }
+body.light-mode .glass { background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(242,248,253,.88)); }
+body.light-mode .footer strong,
+body.light-mode .empty-result h2,
+body.light-mode .evidence-card a,
+body.light-mode .mode-btn.active,
+body.light-mode .mode-btn:hover { color:#102033; }
+body.light-mode textarea,
+body.light-mode input,
+body.light-mode select { background:rgba(255,255,255,.92); color:#102033; border-color:rgba(28,112,170,.22); }
+body.light-mode .result-meta span,
+body.light-mode .chips span { color:#40566b; background:rgba(16,32,51,.035); }
+body.light-mode .mini-evidence strong { color:#24394d; }
+body.light-mode .result-block p,
+body.light-mode .evidence-meta,
+body.light-mode .result-disclaimer { color:#52677b; }

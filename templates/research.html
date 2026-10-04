@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Research Evaluation • AI FactShield Pro{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/research.css') }}">{% endblock %}
+{% block content %}
+<section class="research-page">
+  <div class="research-hero glass">
+    <div class="eyebrow">RESEARCH EVALUATION • 2025–2026</div>
+    <h1>Nadiad misinformation <span>research benchmark</span></h1>
+    <p>This page reports the reproducible evaluation of the Nadiad study area. It separates the text-only ML baseline from the evidence-aware replay and documents the cross-language retrieval component used by the live system.</p>
+  </div>
+
+  <div class="research-grid">
+    <article class="research-card glass">
+      <div class="eyebrow">BASELINE 01</div>
+      <h2>ML Only</h2>
+      <div class="metric-big">{{ '%.2f'|format(ml.metrics.accuracy * 100) }}%</div>
+      <div class="metric-label">Accuracy • {{ ml.rows }} claims</div>
+      <div class="metric-row"><span>Fake Precision</span><b>{{ '%.2f'|format(ml.metrics.precision_fake * 100) }}%</b></div>
+      <div class="metric-row"><span>Fake Recall</span><b>{{ '%.2f'|format(ml.metrics.recall_fake * 100) }}%</b></div>
+      <div class="metric-row"><span>Fake F1</span><b>{{ '%.2f'|format(ml.metrics.f1_fake * 100) }}%</b></div>
+      <div class="metric-row"><span>Macro F1</span><b>{{ '%.2f'|format(ml.metrics.macro_f1 * 100) }}%</b></div>
+    </article>
+
+    <article class="research-card glass accent-card">
+      <div class="eyebrow">ABLATION 02</div>
+      <h2>ML + Evidence</h2>
+      <div class="metric-big">{{ '%.2f'|format(replay.metrics.accuracy * 100) }}%</div>
+      <div class="metric-label">Controlled evidence replay</div>
+      <div class="metric-row"><span>Fake Precision</span><b>{{ '%.2f'|format(replay.metrics.precision_fake * 100) }}%</b></div>
+      <div class="metric-row"><span>Fake Recall</span><b>{{ '%.2f'|format(replay.metrics.recall_fake * 100) }}%</b></div>
+      <div class="metric-row"><span>Fake F1</span><b>{{ '%.2f'|format(replay.metrics.f1_fake * 100) }}%</b></div>
+      <div class="metric-row"><span>Macro F1</span><b>{{ '%.2f'|format(replay.metrics.macro_f1 * 100) }}%</b></div>
+    </article>
+
+    <article class="research-card glass">
+      <div class="eyebrow">COMPONENT 03</div>
+      <h2>Cross-Language Evidence</h2>
+      <div class="metric-big">LIVE</div>
+      <div class="metric-label">Implemented in retrieval pipeline</div>
+      <ul class="feature-list">
+        <li>Gujarati → Gujarati + Hindi + English</li>
+        <li>Hindi → Hindi + English + Gujarati</li>
+        <li>English → English + Gujarati + Hindi</li>
+        <li>Independent sources are deduplicated by domain/headline</li>
+      </ul>
+      <p class="note">Live retrieval is dynamic, so no fixed accuracy is claimed for this component without a frozen retrieval snapshot.</p>
+    </article>
+  </div>
+
+  <div class="research-section glass">
+    <div class="eyebrow">CONFUSION MATRIX • ML ONLY</div>
+    <h2>Fake / Real classification</h2>
+    {% set cm = ml.metrics.confusion_matrix_labels_fake_real %}
+    <table class="cm-table">
+      <tr><th></th><th>Predicted FAKE</th><th>Predicted REAL</th></tr>
+      <tr><th>Actual FAKE</th><td>{{ cm[0][0] }}</td><td>{{ cm[0][1] }}</td></tr>
+      <tr><th>Actual REAL</th><td>{{ cm[1][0] }}</td><td>{{ cm[1][1] }}</td></tr>
+    </table>
+  </div>
+
+  <div class="research-section glass">
+    <div class="eyebrow">RESEARCH INTERPRETATION</div>
+    <h2>Why the evidence layer matters</h2>
+    <p>The Nadiad pilot benchmark contains verified real reports and documented false Nadiad-attribution claims. The text-only model misses several location-misattributed claims; the controlled evidence replay tests whether source evidence can correct those cases.</p>
+    <div class="research-flow">
+      <span>ML Only</span><b>→</b><span>Evidence Retrieval</span><b>→</b><span>Cross-Language Search</span><b>→</b><span>Evidence Comparison</span><b>→</b><span>REAL / FAKE</span>
+    </div>
+    <p class="warning"><strong>Research limitation:</strong> the benchmark is small and manually curated. The controlled replay result is not a claim of 100% real-world accuracy.</p>
+  </div>
+
+  <div class="research-actions">
+    <a class="btn primary" href="{{ url_for('api.api_research_metrics') }}" target="_blank">Open Metrics API →</a>
+    <a class="btn secondary" href="{{ url_for('live_news.index') }}">Test Live Nadiad News →</a>
+  </div>
+</section>
+{% endblock %}

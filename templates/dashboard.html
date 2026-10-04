@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | AI FactShield Pro{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">{% endblock %}
+{% block content %}
+<section class="section-head"><div class="eyebrow">YOUR COMMAND CENTER</div><h1>Welcome, <span>{{ session.get('user_name','User') }}</span></h1><p>Monitor your fake-news analysis activity.</p></section>
+<div class="stats-grid">
+  <div class="stat-card glass"><span>Total Scans</span><strong>{{ stats.total }}</strong><small>All saved analyses</small></div>
+  <div class="stat-card glass"><span>Fake Detected</span><strong>{{ stats.fake }}</strong><small>Flagged as suspicious</small></div>
+  <div class="stat-card glass"><span>Real Detected</span><strong>{{ stats.real }}</strong><small>Classified as real</small></div>
+  <div class="stat-card glass"><span>Avg. Confidence</span><strong>{{ stats.avg_confidence }}%</strong><small>Across your scans</small></div>
+</div>
+<section class="dash-panel glass">
+  <div class="panel-head"><div><div class="eyebrow">RECENT ACTIVITY</div><h2>Latest detections</h2></div><a class="btn secondary" href="{{ url_for('detect.detect') }}">+ New Scan</a></div>
+  {% if recent %}
+  <div class="table-wrap"><table><thead><tr><th>Prediction</th><th>Confidence</th><th>Language</th><th>Date</th></tr></thead><tbody>
+  {% for row in recent %}<tr><td><span class="status {{ row.prediction }}">{{ row.prediction|upper }}</span></td><td>{{ row.confidence }}%</td><td>{{ row.language }}</td><td>{{ row.created_at }}</td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<div class="empty-state">No saved detections yet. Start your first analysis.</div>{% endif %}
+</section>
+{% endblock %}
+{% block js %}<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>{% endblock %}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}AI FactShield Pro{% endblock %}</title>
+  <meta name="description" content="AI FactShield Pro — multimodal fake-news detection and evidence verification for English, Hindi and Gujarati.">
+  <meta name="theme-color" content="#061329">
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+  {% block css %}{% endblock %}
+</head>
+<body>
+  <canvas id="particleCanvas"></canvas>
+  {% include "navbar.html" %}
+  <main class="page-shell">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-stack">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <div class="floating-theme" aria-label="Theme selection">
+    <button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch theme" aria-pressed="false">🌙</button>
+  </div>
+  {% include "footer.html" %}
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  {% block js %}{% endblock %}
+</body>
+</html>

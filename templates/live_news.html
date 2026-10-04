@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block title %}Live News Verification • AI FactShield Pro{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/live_news.css') }}">{% endblock %}
+{% block content %}
+<section class="live-page">
+  <div class="live-hero glass">
+    <div>
+      <div class="eyebrow">LIVE NEWS VERIFICATION</div>
+      <h1>Check <span>current news</span> before you trust it.</h1>
+      <p>Current Nadiad stories are fetched from live APIs and web feeds, then checked against independent reporting, fact-checks, and official sources. The system returns a binary <b>REAL</b> or <b>FAKE</b> decision using live-source evidence first and the trained ML model as a fallback.</p>
+    </div>
+    <div class="provider-box">
+      <span>News providers</span>
+      <strong>{{ data.providers|join(' • ') }}</strong>
+      <small>{% if data.api_configured %}API search enabled + RSS/GDELT fallback{% else %}No-key RSS + GDELT live fallback active{% endif %}</small>
+    </div>
+  </div>
+
+  <form class="filters glass" method="get" action="{{ url_for('live_news.index') }}">
+    <label>Study Area
+      <input type="text" value="Nadiad, Gujarat" readonly aria-label="Study area">
+      <input type="hidden" name="city" value="Nadiad">
+    </label>
+    <label>Category
+      <select name="category">
+        {% for category in categories %}<option value="{{ category }}" {% if data.category == category %}selected{% endif %}>{{ category }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Language
+      <select name="language">
+        {% for language in languages %}<option value="{{ language }}" {% if data.language == language %}selected{% endif %}>{{ language }}</option>{% endfor %}
+      </select>
+    </label>
+    <button class="btn primary" type="submit">Load Current News →</button>
+  </form>
+
+  <div class="claim-check glass">
+    <div>
+      <div class="eyebrow">AUTOMATIC LIVE VERIFICATION</div>
+      <h2>Live news → evidence-first verification</h2>
+      <p>The app fetches current news through configured APIs and live feeds, compares each article with independent sources and fact-checks, and returns only REAL or FAKE. Evidence is preferred; the trained ML model is used only when live evidence is inconclusive.</p>
+    </div>
+    <div id="autoVerifyStatus" class="verify-status loading">🔎 Automatic verification will start for the loaded stories…</div>
+  </div>
+
+  <div class="news-head">
+    <div><div class="eyebrow">CURRENT FEED • {{ data.date_scope }}</div><h2>{{ data.city }} News</h2></div>
+    <span class="count-pill">{{ data.count }} stories</span>
+  </div>
+
+  {% if data.articles %}
+  <div class="news-grid">
+    {% for item in data.articles %}
+    <article class="live-card glass">
+      {% if item.image %}<img src="{{ item.image }}" alt="{{ item.title|e }}" loading="lazy">{% else %}<div class="news-placeholder">AI FACTSHIELD</div>{% endif %}
+      <div class="card-body">
+        <div class="card-meta"><span>{{ item.category }}</span><span>{{ item.source }}</span></div>
+        <h3>{{ item.title }}</h3>
+        {% if item.description %}<p>{{ item.description }}</p>{% endif %}
+        <div class="auto-result loading" data-title="{{ item.title|e }}" data-description="{{ item.description|e }}" data-content="{{ item.content|default('', true)|e }}" data-source="{{ item.source|e }}" data-url="{{ item.url|e }}">⏳ Checking live evidence…</div>
+        <div class="card-bottom"><small>{{ item.published }}</small><div><a href="{{ item.url }}" target="_blank" rel="noopener noreferrer">Original →</a></div></div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state glass"><h3>No live stories returned</h3><p>{{ data.message }}</p><p>For broader current coverage, add <code>NEWS_API_KEY</code> and/or <code>GNEWS_API_KEY</code> in your local <code>.env</code> or Render environment variables.</p></div>
+  {% endif %}
+</section>
+{% endblock %}
+{% block js %}
+<script>
+const city = {{ data.city|tojson }};
+const statusBox = document.getElementById('autoVerifyStatus');
+const cards = [...document.querySelectorAll('.auto-result')];
+
+function escapeHtml(value){
+  return String(value||'').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[ch]));
+}
+
+async function verifyCard(card){
+  const title = card.dataset.title || '';
+  const description = card.dataset.description || '';
+  const content = card.dataset.content || description;
+  const source = card.dataset.source || '';
+  const url = card.dataset.url || '';
+  try{
+    const r = await fetch('{{ url_for("live_news.verify_article") }}',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({title,description,content,source,url,city})
+    });
+    const data = await r.json();
+    if(!r.ok) throw new Error(data.error || 'Verification failed');
+    const result = String(data.result||'FAKE').toUpperCase();
+    const cls = result === 'REAL' ? 'real' : 'fake';
+    const evidence = (data.evidence||[]).slice(0,3).map(e =>
+      `<li><b>${escapeHtml(e.source||'Source')}</b> — ${escapeHtml(e.title||'')}</li>`
+    ).join('');
+    card.className = 'auto-result '+cls;
+    card.innerHTML = `<strong>${result}</strong> <span>${escapeHtml(data.confidence)}%</span><p>${escapeHtml(data.explanation)}</p><small>Evidence domains: ${escapeHtml(data.evidence_domains||0)} • Supporting: ${escapeHtml(data.support_count||0)} • Contradicting: ${escapeHtml(data.contradiction_count||0)} • ML: ${escapeHtml(data.model_prediction||'n/a')} (${escapeHtml(data.model_confidence||0)}%)</small>${evidence?`<ul>${evidence}</ul>`:''}`;
+    return result;
+  }catch(err){
+    card.className='auto-result warn';
+    card.innerHTML='⚠️ Verification unavailable right now';
+    return 'ERROR';
+  }
+}
+
+(async function(){
+  if(!cards.length){
+    statusBox.textContent='No current Nadiad stories available to verify.';
+    return;
+  }
+  let completed=0, real=0, fake=0;
+  // Verify a few cards in parallel so the Render demo does not wait through
+  // one long network round-trip after another. A small concurrency limit avoids
+  // flooding the evidence providers.
+  const concurrency = 4;
+  for(let start=0; start<cards.length; start+=concurrency){
+    const batch = cards.slice(start,start+concurrency);
+    const results = await Promise.all(batch.map(verifyCard));
+    for(const result of results){
+      completed++;
+      if(result==='REAL') real++;
+      if(result==='FAKE') fake++;
+    }
+    statusBox.textContent=`🔎 Checked ${completed}/${cards.length} live stories • REAL: ${real} • FAKE: ${fake}`;
+  }
+  statusBox.className='verify-status result';
+})();
+</script>
+{% endblock %}

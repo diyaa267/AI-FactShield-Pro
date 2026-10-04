@@ -1,0 +1,60 @@
+text,label,source_dataset,language
+Experts say every stock market investment is guaranteed to double in one week.,fake,dataset/train.csv,English
+A miracle drink is guaranteed to cure every disease instantly.,fake,dataset/train.csv,English
+Scientists say drinking one spoon of salt water instantly cures every disease.,fake,dataset/news.csv,English
+सरकार ने आधिकारिक वेबसाइट पर नई योजना की जानकारी जारी की।,real,dataset/train.csv,Hindi
+વૈજ્ઞાનિકોએ અભ્યાસ બાદ નવા પરિણામો પ્રકાશિત કર્યા.,real,dataset/train.csv,Gujarati
+Scientists say a study proves that everyone will become rich overnight.,fake,dataset/train.csv,English
+URGENT!!! The internet will be permanently shut down at midnight. Tell everyone.,fake,dataset/news.csv,English
+આ મેસેજ 10 લોકોને મોકલો નહીં તો તમારું બેંક એકાઉન્ટ બંધ થઈ જશે!,fake,dataset/news.csv,Gujarati
+एक गुप्त संदेश के अनुसार इंटरनेट कल पूरी दुनिया में बंद हो जाएगा।,fake,dataset/train.csv,Hindi
+સત્તાવાર અહેવાલ મુજબ નવી નીતિ જાહેર કરવામાં આવી.,real,dataset/train.csv,Gujarati
+The government announced the scheme through an official notification.,real,dataset/train.csv,English
+Scientists confirm a new water purification method after a peer-reviewed study.,real,dataset/news.csv,English
+एक वायरल संदेश कहता है कि कल से सभी बैंक खाते बंद हो जाएंगे।,fake,dataset/train.csv,Hindi
+આવતીકાલથી બધા બેંક ખાતા બંધ થઈ જશે એવો વાયરલ મેસેજ ખોટો દાવો કરે છે.,fake,dataset/train.csv,Gujarati
+A post says all ATMs in India will stop working forever from midnight.,fake,dataset/train.csv,English
+A post claims Samsung has stopped making all chips worldwide.,fake,dataset/train.csv,English
+The Reserve Bank of India likely intervened in the foreign exchange market to support the rupee.,real,dataset/train.csv,English
+Forward this secret message or your bank account will be closed tonight.,fake,dataset/train.csv,English
+Experts explain that the claim needs more evidence before it can be accepted.,real,dataset/news.csv,English
+Reuters reported that the Indian rupee gained slightly after RBI intervention.,real,dataset/train.csv,English
+The government secretly cancelled all examinations without any official notice.,fake,dataset/train.csv,English
+वैज्ञानिकों ने एक अध्ययन के बाद नए परिणाम प्रकाशित किए।,real,dataset/train.csv,Hindi
+વૈજ્ઞાનિકોએ દરેક બીમારીનો તરત ઇલાજ કરતી ચમત્કારી દવા શોધી છે એવો દાવો ખોટો છે.,fake,dataset/train.csv,Gujarati
+Government will give every citizen one crore rupees tomorrow with no application.,fake,dataset/train.csv,English
+"આજે મધરાતે આખું ઇન્ટરનેટ બંધ થશે, તરત જ બધાને શેર કરો!",fake,dataset/news.csv,Gujarati
+Breaking news says the internet will be permanently shut down worldwide tomorrow.,fake,dataset/train.csv,English
+Scientists publish a peer reviewed study showing a new water purification method.,real,dataset/train.csv,English
+Researchers report promising results in a controlled laboratory experiment.,real,dataset/news.csv,English
+The RBI has announced that all Indian bank accounts will be frozen tomorrow.,fake,dataset/train.csv,English
+BREAKING: Share this message with everyone or your phone will stop working tonight!,fake,dataset/news.csv,English
+RBI એ રૂપિયાને ટેકો આપવા માટે વિદેશી વિનિમય બજારમાં હસ્તક્ષેપ કર્યો હોવાની માહિતી આવી.,real,dataset/train.csv,Gujarati
+A viral message says 100 percent of people will receive a government lottery prize.,fake,dataset/train.csv,English
+ઇન્ટરનેટ આવતીકાલે આખી દુનિયામાં કાયમ માટે બંધ થશે એવો દાવો ખોટો છે.,fake,dataset/train.csv,Gujarati
+Reuters confirmed that every Indian citizen will receive free gold next week.,fake,dataset/train.csv,English
+आरबीआई ने रुपये पर दबाव कम करने के लिए विदेशी मुद्रा बाजार में हस्तक्षेप किया।,real,dataset/train.csv,Hindi
+एक वायरल पोस्ट कहती है कि सभी एटीएम हमेशा के लिए बंद हो जाएंगे।,fake,dataset/train.csv,Hindi
+A message says the RBI has permanently banned all cash withdrawals in India.,fake,dataset/train.csv,English
+सरकार हर नागरिक को बिना आवेदन के एक करोड़ रुपये देगी।,fake,dataset/train.csv,Hindi
+A secret source says every citizen will receive free gold tomorrow. Forward now!,fake,dataset/news.csv,English
+चीनी अदालत ने एवरग्रांडे के संस्थापक को उम्रकैद की सजा सुनाई।,real,dataset/train.csv,Hindi
+This secret government message promises guaranteed free laptops to everyone who forwards it.,fake,dataset/train.csv,English
+"आज रात इंटरनेट हमेशा के लिए बंद होने वाला है, तुरंत सबको भेजें!",fake,dataset/news.csv,Hindi
+Researchers report results from a controlled laboratory experiment.,real,dataset/train.csv,English
+A social media post claims the moon will disappear for seven days next month.,fake,dataset/train.csv,English
+સરકાર દરેક નાગરિકને અરજી વગર એક કરોડ રૂપિયા આપશે એવો મેસેજ ખોટો છે.,fake,dataset/train.csv,Gujarati
+A Chinese court sentenced the Evergrande founder to life in prison.,real,dataset/train.csv,English
+वैज्ञानिकों ने ऐसी दवा खोजी है जिससे इंसान हमेशा जीवित रहेगा।,fake,dataset/train.csv,Hindi
+वैज्ञानिकों ने शोध के बाद नए परिणाम प्रकाशित किए।,real,dataset/news.csv,Hindi
+A viral message claims the US Treasury has cancelled all government debt.,fake,dataset/train.csv,English
+Samsung raised some advanced chipmaking service prices by up to 15 percent for new orders.,real,dataset/train.csv,English
+ब्रेकिंग: यह संदेश 20 लोगों को भेजने पर आपको सरकारी इनाम मिलेगा!,fake,dataset/news.csv,Hindi
+The World Health Organization published updated public health guidance.,real,dataset/train.csv,English
+सरकार ने आधिकारिक अधिसूचना में नई नीति जारी की।,real,dataset/train.csv,Hindi
+वैज्ञानिकों ने नियंत्रित प्रयोग के परिणाम प्रकाशित किए।,real,dataset/train.csv,Hindi
+સરકારે સત્તાવાર વેબસાઇટ પર નવી યોજના જાહેર કરી.,real,dataset/train.csv,Gujarati
+Government publishes the annual budget document on its official portal.,real,dataset/news.csv,English
+Government publishes a new policy on its official website.,real,dataset/train.csv,English
+A Reuters Ipsos poll found 33 percent approval and 64 percent disapproval for Trump.,real,dataset/train.csv,English
+The moon will disappear for seven days and scientists have confirmed it.,fake,dataset/train.csv,English

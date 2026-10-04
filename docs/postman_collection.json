@@ -1,0 +1,19 @@
+{
+  "info": {
+    "name": "AI-FactShield Pro - Nadiad Research APIs",
+    "_postman_id": "ai-factshield-nadiad-2026",
+    "description": "External API testing collection. The project intentionally has no API Testing page; these REST endpoints are tested in Postman.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key":"base_url","value":"http://127.0.0.1:5000"},
+    {"key":"claim","value":"Nadiad municipal authorities announced a new civic rule today."}
+  ],
+  "item": [
+    {"name":"Health","request":{"method":"GET","url":"{{base_url}}/api/health"}},
+    {"name":"Live Nadiad News","request":{"method":"GET","url":"{{base_url}}/api/news/nadiad?limit=10"}},
+    {"name":"Verify Claim","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"claim\": \"{{claim}}\",\n  \"city\": \"Nadiad\"\n}"},"url":"{{base_url}}/api/verify"}},
+    {"name":"Verify Live Article","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"title\": \"Nadiad local news headline\",\n  \"description\": \"Paste article description here\",\n  \"content\": \"Paste article content here\",\n  \"source\": \"Example Source\",\n  \"url\": \"https://example.com/news\",\n  \"city\": \"Nadiad\"\n}"},"url":"{{base_url}}/live-news/verify-article"}},
+    {"name":"Verification History","request":{"method":"GET","url":"{{base_url}}/api/verification-history?limit=20"}}
+  ]
+}

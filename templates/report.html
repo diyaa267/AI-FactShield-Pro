@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Reports | AI FactShield Pro{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/report.css') }}">{% endblock %}
+{% block content %}
+<section class="section-head">
+  <div class="eyebrow">EXPORT CENTER</div>
+  <h1>Analysis <span>Reports</span></h1>
+  <p>Download your saved detection history as CSV or generate an individual PDF verification report.</p>
+</section>
+
+<section class="report-grid">
+  <div class="report-card glass">
+    <div class="report-icon">▦</div>
+    <h2>CSV History Report</h2>
+    <p>Export your complete detection history as a spreadsheet-ready CSV file.</p>
+    <a class="btn primary" href="{{ url_for('report.csv_report') }}">Download CSV →</a>
+  </div>
+  <div class="report-card glass">
+    <div class="report-icon">▤</div>
+    <h2>PDF Verification</h2>
+    <p>Create a professional PDF containing verdict, confidence, language, claim and evidence summary.</p>
+    {% if history %}
+      <a class="btn primary" href="{{ url_for('report.pdf_report', history_id=history[0].id) }}">Latest PDF →</a>
+    {% else %}
+      <span class="tag">RUN A SCAN FIRST</span>
+    {% endif %}
+  </div>
+</section>
+
+{% if history %}
+<section class="glass report-history">
+  <div class="panel-head"><div><div class="eyebrow">SAVED ANALYSES</div><h2>Generate individual reports</h2></div></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Verdict</th><th>Confidence</th><th>Language</th><th>Date</th><th>Report</th></tr></thead>
+      <tbody>
+      {% for row in history[:12] %}
+        <tr>
+          <td><span class="status {{ row.prediction }}">{{ row.prediction|upper }}</span></td>
+          <td>{{ row.confidence }}%</td>
+          <td>{{ row.language }}</td>
+          <td>{{ row.created_at }}</td>
+          <td><a class="btn secondary" href="{{ url_for('report.pdf_report', history_id=row.id) }}">PDF</a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Feedback | AI FactShield Pro{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}">{% endblock %}
+{% block content %}
+<div class="feedback-wrap">
+  <section class="feedback-card glass">
+    <div class="feedback-head">
+      <div class="feedback-badge">✦</div>
+      <div>
+        <div class="eyebrow">YOUR VOICE MATTERS</div>
+        <h1>Send <span>Feedback</span></h1>
+        <p>Help us improve the verification experience and placement demo.</p>
+      </div>
+    </div>
+
+    <form method="POST" class="feedback-form" id="feedbackForm">
+      <div class="rating-block">
+        <label class="field-title">Rate your experience</label>
+        <div class="star-rating" role="radiogroup" aria-label="Rate your experience">
+          {% for value in [1,2,3,4,5] %}
+          <button type="button" class="rating-star" data-rating="{{ value }}"
+                  role="radio" aria-checked="false" aria-label="{{ value }} star">★</button>
+          {% endfor %}
+        </div>
+        <input type="hidden" name="rating" id="rating" value="5">
+        <div class="rating-text" id="ratingText">Excellent · 5/5</div>
+      </div>
+
+      <div class="message-block">
+        <label for="feedbackMessage" class="field-title">Message</label>
+        <textarea id="feedbackMessage" name="message" required maxlength="1000"
+          placeholder="Tell us what you think..."></textarea>
+        <div class="char-count"><span id="charCount">0</span>/1000</div>
+      </div>
+
+      <div class="feedback-note">
+        <span>●</span> Your feedback is stored securely in the project database.
+      </div>
+
+      <button class="btn primary full feedback-submit" type="submit">
+        Submit Feedback <b>→</b>
+      </button>
+    </form>
+  </section>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+(() => {
+  const stars = [...document.querySelectorAll('.rating-star')];
+  const rating = document.getElementById('rating');
+  const ratingText = document.getElementById('ratingText');
+  const message = document.getElementById('feedbackMessage');
+  const charCount = document.getElementById('charCount');
+  const labels = {1:'Poor', 2:'Needs improvement', 3:'Good', 4:'Very good', 5:'Excellent'};
+
+  function setRating(value) {
+    value = Number(value);
+    rating.value = value;
+    stars.forEach(star => {
+      const n = Number(star.dataset.rating);
+      star.classList.toggle('selected', n <= value);
+      star.setAttribute('aria-checked', n === value ? 'true' : 'false');
+    });
+    ratingText.textContent = `${labels[value]} · ${value}/5`;
+  }
+
+  stars.forEach(star => {
+    star.addEventListener('mouseenter', () => {
+      const value = Number(star.dataset.rating);
+      stars.forEach(s => s.classList.toggle('hovered', Number(s.dataset.rating) <= value));
+    });
+    star.addEventListener('mouseleave', () => stars.forEach(s => s.classList.remove('hovered')));
+    star.addEventListener('click', () => setRating(star.dataset.rating));
+    star.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setRating(star.dataset.rating); }
+    });
+  });
+
+  message.addEventListener('input', () => charCount.textContent = message.value.length);
+  setRating(5);
+})();
+</script>
+{% endblock %}

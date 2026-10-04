@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Contact | AI FactShield Pro{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">{% endblock %}
+{% block content %}
+<section class="section-head"><div class="eyebrow">GET IN TOUCH</div><h1>Contact <span>FactShield</span></h1><p>Have a question, demo issue or project suggestion? Send us a message.</p></section>
+<section class="glass simple-panel contact-panel">
+  <form method="POST" class="contact-form" novalidate>
+    <div class="form-grid">
+      <label>Name<input type="text" name="name" required maxlength="80" value="{{ request.form.get('name','') }}" placeholder="Your name"></label>
+      <label>Email<input type="email" name="email" required maxlength="160" value="{{ request.form.get('email','') }}" placeholder="you@example.com"></label>
+    </div>
+    <label>Subject<input type="text" name="subject" required maxlength="160" value="{{ request.form.get('subject','') }}" placeholder="How can we help?"></label>
+    <label>Message<textarea name="message" required minlength="5" maxlength="3000" rows="7" placeholder="Write your message...">{{ request.form.get('message','') }}</textarea></label>
+    <div class="contact-rating" aria-label="Rate your experience">
+      <span>Rate your experience</span>
+      <div class="star-rating">
+        {% for n in range(5,0,-1) %}
+          <input type="radio" id="star{{ n }}" name="rating" value="{{ n }}" {% if request.form.get('rating','5')|int == n %}checked{% endif %}>
+          <label for="star{{ n }}" title="{{ n }} star{{ 's' if n != 1 else '' }}">★</label>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="form-actions"><small>Your message is stored securely in the project database.</small><button class="btn primary" type="submit">Submit Message →</button></div>
+  </form>
+</section>
+{% endblock %}

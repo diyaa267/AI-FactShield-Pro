@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}History | AI FactShield Pro{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/history.css') }}">{% endblock %}
+{% block content %}
+<section class="section-head"><div class="eyebrow">SAVED ANALYSIS</div><h1>Detection <span>History</span></h1></section>
+<section class="dash-panel glass">
+<div class="table-wrap"><table><thead><tr><th>Prediction</th><th>Confidence</th><th>Language</th><th>Keywords</th><th>Date</th><th>Report</th></tr></thead><tbody>
+{% for row in history %}<tr><td><span class="status {{ row.prediction }}">{{ row.prediction|upper }}</span></td><td>{{ row.confidence }}%</td><td>{{ row.language }}</td><td>{{ row.keywords }}</td><td>{{ row.created_at }}</td><td><a class="btn secondary" href="{{ url_for('report.pdf_report', history_id=row.id) }}">PDF</a></td></tr>{% else %}<tr><td colspan="6">No history yet.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

@@ -1,0 +1,112 @@
+{
+  "benchmark": "Nadiad verified claims 2025-2026",
+  "mode": "replay",
+  "rows": 12,
+  "class_counts": {
+    "real": 8,
+    "fake": 4
+  },
+  "metrics": {
+    "accuracy": 1.0,
+    "precision_fake": 1.0,
+    "recall_fake": 1.0,
+    "f1_fake": 1.0,
+    "macro_f1": 1.0,
+    "confusion_matrix_labels_fake_real": [
+      [
+        4,
+        0
+      ],
+      [
+        0,
+        8
+      ]
+    ]
+  },
+  "details": [
+    {
+      "id": "N01",
+      "gold": "real",
+      "prediction": "real",
+      "ml_prediction": "real",
+      "ml_confidence": 61.76
+    },
+    {
+      "id": "N02",
+      "gold": "real",
+      "prediction": "real",
+      "ml_prediction": "real",
+      "ml_confidence": 65.01
+    },
+    {
+      "id": "N03",
+      "gold": "real",
+      "prediction": "real",
+      "ml_prediction": "real",
+      "ml_confidence": 62.07
+    },
+    {
+      "id": "N04",
+      "gold": "real",
+      "prediction": "real",
+      "ml_prediction": "real",
+      "ml_confidence": 62.73
+    },
+    {
+      "id": "N05",
+      "gold": "real",
+      "prediction": "real",
+      "ml_prediction": "real",
+      "ml_confidence": 65.56
+    },
+    {
+      "id": "N06",
+      "gold": "real",
+      "prediction": "real",
+      "ml_prediction": "real",
+      "ml_confidence": 62.1
+    },
+    {
+      "id": "N07",
+      "gold": "real",
+      "prediction": "real",
+      "ml_prediction": "real",
+      "ml_confidence": 60.02
+    },
+    {
+      "id": "N08",
+      "gold": "real",
+      "prediction": "real",
+      "ml_prediction": "real",
+      "ml_confidence": 65.14
+    },
+    {
+      "id": "F01",
+      "gold": "fake",
+      "prediction": "fake",
+      "ml_prediction": "fake",
+      "ml_confidence": 50.69
+    },
+    {
+      "id": "F02",
+      "gold": "fake",
+      "prediction": "fake",
+      "ml_prediction": "real",
+      "ml_confidence": 51.91
+    },
+    {
+      "id": "F03",
+      "gold": "fake",
+      "prediction": "fake",
+      "ml_prediction": "real",
+      "ml_confidence": 59.12
+    },
+    {
+      "id": "F04",
+      "gold": "fake",
+      "prediction": "fake",
+      "ml_prediction": "real",
+      "ml_confidence": 52.03
+    }
+  ]
+}

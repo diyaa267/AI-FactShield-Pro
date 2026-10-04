@@ -1,0 +1,50 @@
+[
+  {
+    "id": "demo-1",
+    "category": "Economy",
+    "verdict": "real",
+    "title": "Indian central bank likely intervenes to limit pressure on rupee",
+    "description": "Demo evidence: Reuters reported on August 20, 2026 that the Indian central bank likely intervened in the foreign exchange market to support the rupee.",
+    "source": "Reuters (Demo Evidence)",
+    "published": "20 Aug 2026",
+    "link": "https://www.reuters.com/world/india/indian-central-bank-likely-intervenes-limit-pressure-rupee-traders-say-2026-08-20/",
+    "image": "images/demo/demo-1.png",
+    "video": "videos/demo-1.mp4"
+  },
+  {
+    "id": "demo-2",
+    "category": "Technology",
+    "verdict": "real",
+    "title": "Samsung hikes chipmaking prices by up to 15% on demand spike",
+    "description": "Demo evidence: Reuters reported on August 19, 2026 that Samsung Electronics raised prices for some advanced contract chipmaking services by up to 15% for new orders.",
+    "source": "Reuters (Demo Evidence)",
+    "published": "19 Aug 2026",
+    "link": "https://www.reuters.com/business/autos-transportation/samsung-hikes-chipmaking-prices-by-up-15-demand-spike-sources-say-2026-08-19/",
+    "image": "images/demo/demo-2.png",
+    "video": "videos/demo-2.mp4"
+  },
+  {
+    "id": "demo-3",
+    "category": "Viral Claim",
+    "verdict": "fake",
+    "title": "Government announces free laptops for every citizen through a secret message",
+    "description": "Demo evidence: This is a deliberately fabricated placement-demo claim. No official announcement supports it.",
+    "source": "AI FactShield Demo Lab",
+    "published": "Demo",
+    "link": "#",
+    "image": "images/demo/demo-3.png",
+    "video": "videos/demo-3.mp4"
+  },
+  {
+    "id": "demo-4",
+    "category": "Viral Claim",
+    "verdict": "fake",
+    "title": "RBI permanently shuts all foreign-exchange operations across India",
+    "description": "Demo evidence: This is a deliberately fabricated placement-demo claim. It is designed to demonstrate a FAKE result.",
+    "source": "AI FactShield Demo Lab",
+    "published": "Demo",
+    "link": "#",
+    "image": "images/demo/demo-4.png",
+    "video": "videos/demo-4.mp4"
+  }
+]

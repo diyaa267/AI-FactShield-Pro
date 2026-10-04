@@ -1,0 +1,7 @@
+.footer{width:min(1240px,92%);margin:70px auto 25px;padding:25px 0;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:20px;color:var(--muted);font-size:13px;position:relative;z-index:2}.footer strong{color:#fff;display:block;font-size:16px;margin-bottom:4px}.footer-links{display:flex;gap:18px}.footer-links a:hover{color:var(--cyan)}
+
+/* KineTrexa-style floating theme control: right side, above the lower edge. */
+.floating-theme{position:fixed;right:24px;bottom:92px;z-index:9999;display:flex;align-items:center;justify-content:center;padding:7px;border:1px solid var(--line);border-radius:50%;background:rgba(5,16,29,.82);backdrop-filter:blur(14px);box-shadow:0 12px 35px rgba(0,0,0,.22)}
+.floating-theme .theme-toggle{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.07);color:var(--text);cursor:pointer;font-size:19px;display:grid;place-items:center;transition:.2s ease}.floating-theme .theme-toggle:hover{transform:scale(1.05);border-color:var(--cyan);box-shadow:0 0 20px rgba(24,191,255,.18)}
+body.light-mode .floating-theme{background:rgba(255,255,255,.9);box-shadow:0 12px 35px rgba(31,65,95,.18)}
+@media(max-width:600px){.floating-theme{right:14px;bottom:86px}}
